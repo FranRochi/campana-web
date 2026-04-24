@@ -17,5 +17,5 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_PORT || '22' }}
           script: |
-            chmod +x ~/apps/campaña/deploy.sh
-            ~/apps/campaña/deploy.sh
+            chmod +x ~/apps/campana/deploy.sh
+            ~/apps/campana/deploy.sh
