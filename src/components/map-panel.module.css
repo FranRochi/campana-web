@@ -1,0 +1,494 @@
+.page { display: flex; height: 100%; position: relative; overflow: hidden; }
+
+.mapWrap { flex: 1; position: relative; }
+.mapWrap :global(.leaflet-container) { width: 100%; height: 100%; background: #E8EDF4 !important; }
+.mapWrap :global(.leaflet-control-attribution) { font-size: 9px !important; }
+
+/* ── FILTER BAR ── */
+.filtersBar {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 400;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filterWrap { position: relative; }
+
+.filterBtn {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 20px;
+  border: 1.5px solid #E4E7ED;
+  background: white;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: #7A8599;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.filterBtn svg { width: 12px; height: 12px; }
+.chevron { width: 10px !important; height: 10px !important; }
+.filterBtn:hover { border-color: #aaa; color: #1A2233; }
+.filterBtnActive { background: #1B2B4B !important; color: white !important; border-color: #1B2B4B !important; }
+
+.filterClear {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 20px;
+  border: 1.5px solid #E4E7ED;
+  background: white;
+  font-family: inherit;
+  font-size: 12px;
+  color: #E8749A;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  transition: all 0.15s;
+}
+.filterClear:hover { background: #fff0f4; border-color: #E8749A; }
+
+/* ── DROPDOWN ── */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #E4E7ED;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  min-width: 210px;
+  z-index: 500;
+  overflow: hidden;
+}
+
+.dropdownHeader {
+  padding: 10px 14px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #7A8599;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.dropdownOption {
+  width: 100%;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #1A2233;
+  text-align: left;
+  transition: background 0.1s;
+}
+.dropdownOption:hover { background: #F5F6F8; }
+.dropdownSelected { color: #1B2B4B; font-weight: 500; }
+
+.optDot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+.fortalezaDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,0.6);
+}
+
+/* ── LEGEND ── */
+.legend {
+  position: absolute;
+  bottom: 40px;
+  left: 14px;
+  z-index: 400;
+  background: white;
+  border-radius: 10px;
+  padding: 12px 16px;
+  border: 1px solid #E4E7ED;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  font-size: 12px;
+}
+
+.legendTitle {
+  font-weight: 600;
+  font-size: 11px;
+  color: #7A8599;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  color: #1A2233;
+}
+
+.legendDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.legendCircle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
+}
+
+.legendDivider {
+  height: 1px;
+  background: #E4E7ED;
+  margin: 8px 0;
+}
+
+/* ── RIGHT PANEL ── */
+.panel {
+  width: 300px;
+  flex-shrink: 0;
+  background: white;
+  border-left: 1px solid #E4E7ED;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panelHeader {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid #E4E7ED;
+}
+
+.panelEyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  color: #7A8599;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.panelTitle {
+  font-size: 26px;
+  font-weight: 400;
+  color: #1A2233;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.panelSub {
+  font-size: 12px;
+  color: #7A8599;
+  margin-top: 4px;
+}
+
+.panelBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── INFO SECTIONS ── */
+.infoSection {
+  margin-bottom: 20px;
+}
+
+.infoLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: #7A8599;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.infoValue {
+  font-size: 14px;
+  color: #1A2233;
+  font-weight: 400;
+}
+
+.intendenteHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.partyBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #F5F6F8;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #1A2233;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.3;
+}
+
+.partyDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── POBLACIÓN ── */
+.popRow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.popItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.popYear {
+  font-size: 10px;
+  font-weight: 600;
+  color: #7A8599;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.popVal {
+  font-size: 15px;
+  font-weight: 500;
+  color: #1A2233;
+}
+
+.popDivider {
+  width: 1px;
+  height: 32px;
+  background: #E4E7ED;
+  margin: 0 16px;
+  flex-shrink: 0;
+}
+
+/* ── CONCEJALES LIST ── */
+.concejalesList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.concejalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.concejalName {
+  color: #7A8599;
+  flex: 1;
+  padding-right: 8px;
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.concejalPct {
+  font-weight: 600;
+  color: #1A2233;
+  flex-shrink: 0;
+}
+
+.barTrack {
+  height: 4px;
+  background: #eee;
+  border-radius: 2px;
+  margin-top: 2px;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+.barFill {
+  height: 4px;
+  border-radius: 2px;
+  background: #4b5563;
+  transition: width 0.4s ease;
+}
+
+.participacionRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #7A8599;
+  border-top: 1px solid #E4E7ED;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.participacionRow strong {
+  color: #1A2233;
+  font-size: 14px;
+}
+
+/* ── PONDERACIONES ── */
+.ponderacionRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #F0F1F4;
+  font-size: 12px;
+}
+
+.ponderacionRow:last-of-type {
+  border-bottom: none;
+}
+
+.ponderacionVar {
+  color: #1A2233;
+}
+
+.ponderacionPeso {
+  font-weight: 600;
+  color: #1A2233;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.ponderacionPendiente {
+  color: #B0B8C8 !important;
+  font-weight: 400 !important;
+}
+
+.justificativoTexto {
+  font-size: 12px;
+  color: #374151;
+  line-height: 1.65;
+  margin: 0;
+  padding: 10px 12px;
+  background: #F0F4FF;
+  border-radius: 6px;
+  border-left: 3px solid #6B8CFF;
+}
+
+.fortalezaTexto {
+  font-size: 11px;
+  color: #7A8599;
+  line-height: 1.55;
+  margin: 10px 0 0;
+  padding: 10px;
+  background: #F8F9FB;
+  border-radius: 6px;
+  border-left: 3px solid #E4E7ED;
+}
+
+/* ── FORTALEZA POLÍTICA ── */
+.fortalezaBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #F8F9FB;
+  border-radius: 8px;
+  border: 1.5px solid #E4E7ED;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.fortalezaCircleIndicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1.5px rgba(0,0,0,0.12);
+}
+
+.fortalezaNivelLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1A2233;
+  flex: 1;
+}
+
+.fortalezaScoreNum {
+  font-size: 11px;
+  color: #7A8599;
+  font-weight: 500;
+}
+
+.fortalezaDesglose {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.fortalezaRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #7A8599;
+  padding: 5px 0;
+  border-bottom: 1px solid #F0F1F4;
+}
+
+.fortalezaRow:last-child {
+  border-bottom: none;
+}
+
+.fortalezaRow strong {
+  color: #1A2233;
+  font-size: 12px;
+}
+
+/* ── EMPTY STATE ── */
+.empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: #7A8599;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.empty p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #7A8599;
+  font-size: 14px;
+}
