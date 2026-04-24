@@ -15,10 +15,16 @@ npm run dev -- --hostname 0.0.0.0 --port 3000
 Por defecto consume:
 
 ```env
+NEXT_PUBLIC_API_BASE_URL=/api
+```
+
+Para desarrollo local, si levantás backend aparte en `localhost:8000`, usá `.env.local`:
+
+```env
 NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api
 ```
 
-Eso ya esta configurado en `.env.local`.
+En producción, detrás de nginx, conviene mantener `/api`.
 
 ## Estructura
 
