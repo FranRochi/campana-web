@@ -492,3 +492,28 @@
   color: #7A8599;
   font-size: 14px;
 }
+
+@media (max-width: 768px) {
+  /* Hide right info panel — map takes full width */
+  .panel {
+    display: none;
+  }
+
+  /* Filters scroll horizontally */
+  .filtersBar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    right: 0;
+    padding-right: 14px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .filtersBar::-webkit-scrollbar { display: none; }
+
+  /* Legend at bottom-left, compact */
+  .legend {
+    bottom: 20px;
+    font-size: 11px;
+    padding: 10px 12px;
+  }
+}

@@ -133,6 +133,20 @@ export function DashboardShell({ children }: { children: ReactNode }) {
       </aside>
 
       <main className={styles.main}>{children}</main>
+
+      {/* Bottom tab bar — mobile only */}
+      <nav className={styles.bottomNav}>
+        {modules.map((module) => (
+          <Link
+            key={module.key}
+            href={module.route}
+            className={`${styles.navTab} ${pathname === module.route ? styles.navTabActive : ""}`}
+          >
+            <span className={styles.navTabIcon}>{NAV_ICONS[module.key]}</span>
+            <span className={styles.navTabLabel}>{module.title}</span>
+          </Link>
+        ))}
+      </nav>
     </div>
   );
 }

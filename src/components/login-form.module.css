@@ -407,9 +407,108 @@
   transform: translateY(0);
 }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE — MOBILE ── */
+@keyframes slideUpCard {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 768px) {
-  .layout { grid-template-columns: 1fr; }
-  .brandPanel { display: none; }
-  .formPanel { padding: 40px 24px; }
+  /* Full-screen navy layout */
+  .layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--navy);
+  }
+
+  /* Compact brand at top — centered */
+  .brandPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    padding: calc(env(safe-area-inset-top, 44px) + 20px) 24px 0;
+    text-align: center;
+  }
+
+  .brandTop {
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+
+  .brandLogo {
+    width: 36px;
+    height: 36px;
+    font-size: 11px;
+  }
+
+  .brandName {
+    font-size: 13px;
+  }
+
+  /* Title: centered, smaller */
+  .brandCenter {
+    text-align: center;
+    padding-bottom: 0;
+  }
+
+  .brandCenter h1 {
+    font-size: 28px;
+    letter-spacing: -0.025em;
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  /* Hide description — keeps it clean and airy */
+  .brandCenter p {
+    display: none;
+  }
+
+  /* Hide stats */
+  .brandBottom {
+    display: none;
+  }
+
+  /* Form panel: sits naturally below brand, leaving navy below */
+  .formPanel {
+    background: transparent;
+    padding: 24px 20px 0;
+    display: block;
+    align-items: unset;
+    justify-content: unset;
+  }
+
+  /* White card: full border-radius, centered in the screen */
+  .formCard {
+    background: white;
+    border-radius: 24px;
+    padding: 24px 22px 22px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.28);
+    max-width: none;
+    animation: slideUpCard 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  /* Remove Bienvenido + subtitle */
+  .formHeader {
+    display: none;
+  }
+
+  .field {
+    margin-bottom: 14px;
+  }
+
+  .inputWrap input {
+    height: 52px;
+    font-size: 16px; /* prevents iOS auto-zoom */
+    border-radius: 14px;
+  }
+
+  .btnSubmit {
+    height: 54px;
+    font-size: 16px;
+    border-radius: 14px;
+    margin-top: 6px;
+  }
 }

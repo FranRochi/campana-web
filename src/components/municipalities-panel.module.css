@@ -240,3 +240,23 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 14px 16px 12px;
+  }
+
+  .title { font-size: 22px; }
+
+  .search { width: 100%; padding: 8px 12px; }
+
+  .tableWrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .table { min-width: 500px; }
+
+  .table thead th, .table td { padding: 10px 12px; }
+
+  .pagination {
+    gap: 8px;
+    padding: 10px 16px;
+  }
+}
