@@ -211,9 +211,9 @@ export function MapPanel() {
     return result.sort((a, b) => a.label.localeCompare(b.label));
   }, [geojson]);
 
-  // Section summary data (for the panel when a section is selected and no municipality is clicked)
+  // Section summary data (for the panel when a specific section is selected and no municipality is clicked)
   const sectionData = useMemo(() => {
-    if (!geojson || activeFilters.seccion === "all") return null;
+    if (!geojson || activeFilters.seccion === "all" || activeFilters.seccion === "todas") return null;
     const features = geojson.features.filter(
       (f) => f.properties.municipio?.seccion_electoral_nombre === activeFilters.seccion,
     );
@@ -282,7 +282,7 @@ export function MapPanel() {
   const justificativo = detalle?.intendente?.justificativo_fortaleza;
 
   // Panel content: section overview OR municipality detail
-  const showSectionPanel = activeFilters.seccion !== "all" && !selected && sectionData;
+  const showSectionPanel = activeFilters.seccion !== "all" && activeFilters.seccion !== "todas" && !selected && sectionData;
 
   return (
     <div className={styles.page}>
@@ -336,6 +336,9 @@ export function MapPanel() {
               <div className={styles.dropdown}>
                 <div className={styles.dropdownHeader}>Sección electoral</div>
                 <button type="button" className={`${styles.dropdownOption} ${activeFilters.seccion === "all" ? styles.dropdownSelected : ""}`} onClick={() => setFilter("seccion", "all")}>
+                  Sin filtro
+                </button>
+                <button type="button" className={`${styles.dropdownOption} ${activeFilters.seccion === "todas" ? styles.dropdownSelected : ""}`} onClick={() => setFilter("seccion", "todas")}>
                   Todas las secciones
                 </button>
                 {secciones.map((s) => (

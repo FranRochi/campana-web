@@ -23,6 +23,21 @@ type Props = {
   activeFilters?: MapFilters;
 };
 
+const SECCION_COLOR_PALETTE = [
+  "#3B82F6", "#F59E0B", "#10B981", "#EF4444", "#8B5CF6",
+  "#EC4899", "#14B8A6", "#F97316", "#6366F1", "#84CC16",
+  "#06B6D4", "#D97706", "#7C3AED", "#059669", "#E11D48",
+];
+
+function getSectionColor(nombre: string): string {
+  let hash = 5381;
+  for (let i = 0; i < nombre.length; i++) {
+    hash = ((hash << 5) + hash) + nombre.charCodeAt(i);
+    hash = hash & 0x7fffffff;
+  }
+  return SECCION_COLOR_PALETTE[hash % SECCION_COLOR_PALETTE.length];
+}
+
 function getBloqueColor(m: GeoJsonFeature["properties"]["municipio"]): string {
   if (!m) return BLOQUE_COLORS.sd;
   const bloque = getMunicipioBloque(m.frente, m.partido);
@@ -264,6 +279,8 @@ export function MunicipalityMap({ geojson, selectedMunicipality, onSelect, activ
   const showFortaleza = activeFilters ? activeFilters.fortaleza !== "all" : false;
   const showFortalezaProvincial = activeFilters ? activeFilters.fortalezaProvincial !== "all" : false;
   const seccionMode = activeFilters ? activeFilters.seccion !== "all" : false;
+  const seccionTodas = activeFilters?.seccion === "todas";
+  const seccionEspecifica = seccionMode && !seccionTodas;
 
   return (
     <MapContainer
@@ -286,8 +303,20 @@ export function MunicipalityMap({ geojson, selectedMunicipality, onSelect, activ
           const isActive = selectedMunicipality === properties.nombre_normalizado;
           const m = properties.municipio;
 
-          // ── Section visualization mode ──
-          if (seccionMode) {
+          // ── Section visualization mode: all sections ──
+          if (seccionTodas) {
+            const secNombre = m?.seccion_electoral_nombre ?? "";
+            const secColor = secNombre ? getSectionColor(secNombre) : "#BDBDBD";
+            return {
+              color: isActive ? "#0F1F3D" : "rgba(255,255,255,0.7)",
+              weight: isActive ? 2.8 : 0.9,
+              fillColor: secColor,
+              fillOpacity: isActive ? 0.95 : 0.82,
+            };
+          }
+
+          // ── Section visualization mode: specific section ──
+          if (seccionEspecifica) {
             const inSection = m?.seccion_electoral_nombre === activeFilters?.seccion;
             if (!inSection) {
               return {
@@ -297,11 +326,12 @@ export function MunicipalityMap({ geojson, selectedMunicipality, onSelect, activ
                 fillOpacity: 0.18,
               };
             }
+            const secColor = getSectionColor(activeFilters?.seccion ?? "");
             return {
-              color: isActive ? "#0F1F3D" : "#1B2B4B",
+              color: isActive ? "#0F1F3D" : "rgba(255,255,255,0.7)",
               weight: isActive ? 3 : 2.2,
-              fillColor: getBloqueColor(m),
-              fillOpacity: isActive ? 0.95 : 0.88,
+              fillColor: secColor,
+              fillOpacity: isActive ? 0.95 : 0.85,
             };
           }
 
