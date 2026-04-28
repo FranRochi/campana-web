@@ -15,7 +15,7 @@ import {
   getFortalezaProvincialNivel,
 } from "@/lib/fortaleza";
 import type { FiltroConfig, GeoJsonFeature, MunicipioDetalle, PbaGeoJson } from "@/types/campaign";
-import { BLOQUE_COLORS } from "./municipality-map";
+import { BLOQUE_COLORS, getMunicipioBloque } from "@/lib/bloque";
 import type { MapFilters } from "./municipality-map";
 
 import styles from "./map-panel.module.css";
@@ -224,15 +224,6 @@ export function MapPanel() {
     const municipios = features.map((f) => f.properties.municipio).filter(Boolean) as NonNullable<GeoJsonFeature["properties"]["municipio"]>[];
     return { nombre: activeFilters.seccion, totalPob, totalPadron, pctPadron, municipios, count: features.length };
   }, [geojson, activeFilters.seccion]);
-
-  function getMunicipioBloqueFast(m: NonNullable<GeoJsonFeature["properties"]["municipio"]>): string {
-    const text = ((m.frente || "") + " " + (m.partido || "")).toUpperCase();
-    if (/FUERZA PATRIA|UNION POR LA PATRIA|FRENTE PARA LA VICTORIA|FRENTE DE TODOS|KIRCHNER|PERONISMO/.test(text)) return "fp";
-    if (/LIBERTAD AVANZA/.test(text)) return "lla";
-    if (/JUNTOS POR EL CAMBIO|CAMBIEMOS|PROPUESTA REPUBLICANA|\bPRO\b|UCR|RADICAL/.test(text)) return "jxc";
-    if (text.trim()) return "otro";
-    return "sd";
-  }
 
   function setFilter(key: FilterKey, value: string) {
     setActiveFilters((prev) => ({ ...prev, [key]: value }));
@@ -529,7 +520,7 @@ export function MapPanel() {
                     <div key={m.nombre} className={styles.sectionMunicipioRow}>
                       <span
                         className={styles.sectionMunicipioDot}
-                        style={{ background: BLOQUE_COLORS[getMunicipioBloqueFast(m)] ?? "#BDBDBD" }}
+                        style={{ background: BLOQUE_COLORS[getMunicipioBloque(m.frente, m.partido)] ?? "#BDBDBD" }}
                       />
                       <span className={styles.sectionMunicipioName}>{m.nombre}</span>
                     </div>
