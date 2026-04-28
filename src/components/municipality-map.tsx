@@ -22,6 +22,14 @@ type Props = {
   activeFilters?: MapFilters;
 };
 
+export const BLOQUE_COLORS: Record<string, string> = {
+  fp: "#62b5e5",
+  jxc: "#ffb81c",
+  lla: "#753bbd",
+  otro: "#F28BB3",
+  sd: "#BDBDBD",
+};
+
 function getMunicipioBloque(frente?: string | null, partido?: string | null): string {
   const text = ((frente || "") + " " + (partido || "")).toUpperCase();
   if (/FUERZA PATRIA|UNION POR LA PATRIA|FRENTE PARA LA VICTORIA|FRENTE DE TODOS|KIRCHNER|PERONISMO/.test(text)) return "fp";
@@ -29,6 +37,12 @@ function getMunicipioBloque(frente?: string | null, partido?: string | null): st
   if (/JUNTOS POR EL CAMBIO|CAMBIEMOS|PROPUESTA REPUBLICANA|\bPRO\b|UCR|RADICAL/.test(text)) return "jxc";
   if (text.trim()) return "otro";
   return "sd";
+}
+
+function getBloqueColor(m: GeoJsonFeature["properties"]["municipio"]): string {
+  if (!m) return BLOQUE_COLORS.sd;
+  const bloque = getMunicipioBloque(m.frente, m.partido);
+  return BLOQUE_COLORS[bloque] ?? BLOQUE_COLORS.sd;
 }
 
 function featureMatchesFilters(m: GeoJsonFeature["properties"]["municipio"], activeFilters?: MapFilters): boolean {
@@ -253,7 +267,8 @@ function MapViewport({
     const layer = leafletGeoJSON(target as unknown as GeoJSON.GeoJsonObject);
     const bounds = layer.getBounds();
     if (bounds.isValid()) {
-      map.fitBounds(bounds, { padding: [30, 30], maxZoom: 10 });
+      // Use a modest zoom so the surrounding area stays visible
+      map.fitBounds(bounds, { padding: [60, 60], maxZoom: 9 });
     }
   }, [geojson, map, provinceBounds, selectedMunicipality]);
 
@@ -264,6 +279,7 @@ export function MunicipalityMap({ geojson, selectedMunicipality, onSelect, activ
   const filterKey = activeFilters ? JSON.stringify(activeFilters) : "none";
   const showFortaleza = activeFilters ? activeFilters.fortaleza !== "all" : false;
   const showFortalezaProvincial = activeFilters ? activeFilters.fortalezaProvincial !== "all" : false;
+  const seccionMode = activeFilters ? activeFilters.seccion !== "all" : false;
 
   return (
     <MapContainer
@@ -286,6 +302,25 @@ export function MunicipalityMap({ geojson, selectedMunicipality, onSelect, activ
           const isActive = selectedMunicipality === properties.nombre_normalizado;
           const m = properties.municipio;
 
+          // ── Section visualization mode ──
+          if (seccionMode) {
+            const inSection = m?.seccion_electoral_nombre === activeFilters?.seccion;
+            if (!inSection) {
+              return {
+                color: "rgba(200,205,214,0.4)",
+                weight: 0.4,
+                fillColor: "#C8CDD6",
+                fillOpacity: 0.18,
+              };
+            }
+            return {
+              color: isActive ? "#0F1F3D" : "#1B2B4B",
+              weight: isActive ? 3 : 2.2,
+              fillColor: getBloqueColor(m),
+              fillOpacity: isActive ? 0.95 : 0.88,
+            };
+          }
+
           const hidden = !featureMatchesFilters(m, activeFilters);
 
           if (!hidden && showFortalezaProvincial) {
@@ -303,12 +338,21 @@ export function MunicipalityMap({ geojson, selectedMunicipality, onSelect, activ
           return {
             color: isActive ? "#1B2B4B" : "rgba(255,255,255,0.7)",
             weight: isActive ? 2.4 : 0.9,
-            fillColor: hidden ? "#E8EDF4" : (properties.fill || "#C7C7CC"),
+            fillColor: hidden ? "#E8EDF4" : getBloqueColor(m),
             fillOpacity: hidden ? 0.25 : (isActive ? 0.92 : 0.8),
           };
         }}
         onEachFeature={(feature, layer: Layer) => {
           const typedFeature = feature as unknown as GeoJsonFeature;
+          const nombre = typedFeature.properties.municipio?.nombre || typedFeature.properties.nam;
+          if (nombre) {
+            layer.bindTooltip(nombre, {
+              sticky: true,
+              direction: "top",
+              offset: [0, -6],
+              className: "municipio-tooltip",
+            });
+          }
           layer.on({ click: () => onSelect(typedFeature) });
         }}
       />
@@ -345,3 +389,4 @@ export function MunicipalityMap({ geojson, selectedMunicipality, onSelect, activ
     </MapContainer>
   );
 }
+
