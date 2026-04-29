@@ -360,71 +360,111 @@
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Concejo cards
+   Election cards
 ───────────────────────────────────────────────────────────── */
-.concejoGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+.electionWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.concejoCard {
-  padding: 22px 20px 18px;
-  border-radius: 16px;
+.electionGroup {
+  background: #ffffff;
+  border: 1px solid #d5e3ee;
+  border-radius: 18px;
+  padding: 18px 20px 20px;
+  box-shadow: 0 2px 12px rgba(22, 45, 75, 0.06);
+}
+
+.electionGroupHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  color: #3a5370;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.electionGroupDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.electionGroupCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.electionCard {
+  padding: 16px 18px 16px;
+  border-radius: 14px;
   border: 1px solid rgba(22, 45, 75, 0.08);
   border-top: 3px solid;
-  box-shadow: 0 2px 12px rgba(22, 45, 75, 0.06);
+  box-shadow: 0 2px 8px rgba(22, 45, 75, 0.05);
   animation: slideUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) both;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.concejoCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 28px rgba(22, 45, 75, 0.12);
+.electionCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(22, 45, 75, 0.1);
 }
 
-.concejoIconWrap {
+.electionCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.electionIconWrap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 10px;
   border: 1.5px solid;
-  font-size: 1rem;
-  font-weight: 900;
-  margin-bottom: 14px;
   background: rgba(255,255,255,0.7);
 }
 
-.concejoNum {
-  font-size: 2.8rem;
+.electionYear {
+  font-size: 0.85rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.85;
+}
+
+.electionNum {
+  font-size: 1.9rem;
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.03em;
+  white-space: nowrap;
 }
 
-.concejoLabel {
-  margin-top: 8px;
+.electionLabel {
+  margin-top: 6px;
   color: #1f344f;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 800;
 }
 
-.concejoPct {
-  margin-top: 4px;
-  color: #6d8599;
-  font-size: 0.78rem;
-  font-weight: 700;
-}
-
-.concejoSub {
-  margin-top: 12px;
-  padding-top: 12px;
+.electionSub {
+  margin-top: 10px;
+  padding-top: 10px;
   border-top: 1px solid rgba(22, 45, 75, 0.08);
   color: #7a96a8;
-  font-size: 0.74rem;
+  font-size: 0.73rem;
   font-weight: 600;
+  line-height: 1.4;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -719,7 +759,6 @@
   .header { flex-direction: column; align-items: flex-start; }
   .kpiPill { align-self: flex-start; }
   .bloqueGrid { grid-template-columns: repeat(3, 1fr); }
-  .concejoGrid { grid-template-columns: repeat(2, 1fr); }
   .twoCol { grid-template-columns: 1fr; }
 }
 
@@ -743,8 +782,8 @@
   .title { font-size: 1.9rem; }
   .kpiPill { flex-direction: column; align-items: flex-start; }
   .kpiPillDiv { width: 100%; height: 1px; margin: 8px 0; }
-  .bloqueGrid,
-  .concejoGrid { grid-template-columns: 1fr 1fr; }
+  .bloqueGrid { grid-template-columns: 1fr 1fr; }
+  .electionGroupCards { grid-template-columns: 1fr; }
   .table { overflow-x: auto; }
   .tableHead,
   .tableRow { min-width: 640px; }
