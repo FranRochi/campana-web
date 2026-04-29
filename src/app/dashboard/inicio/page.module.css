@@ -1,0 +1,274 @@
+.page {
+  min-height: 100%;
+  overflow: auto;
+  padding: 34px 38px 48px;
+  background: #eef3f8;
+}
+
+.loading {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  color: #485b74;
+  font-weight: 700;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: #4774a4;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: #182943;
+  font-size: 2.35rem;
+  line-height: 1;
+}
+
+.headerStats {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 18px;
+  border: 1px solid #d9e3ec;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 28px rgba(22, 45, 75, 0.08);
+}
+
+.headerStat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.headerStatNum {
+  color: #162d4b;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.headerStatLabel {
+  color: #697b90;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.headerStatDiv {
+  width: 1px;
+  height: 34px;
+  background: #d9e3ec;
+}
+
+.section {
+  margin-top: 18px;
+}
+
+.sectionTitle {
+  margin: 0 0 12px;
+  color: #243a56;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.bloqueGrid,
+.fourGrid,
+.fiveGrid {
+  display: grid;
+  gap: 12px;
+}
+
+.bloqueGrid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.fourGrid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.fiveGrid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.bloqueCard,
+.metricCard {
+  border: 1px solid #dce5ee;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 22px rgba(22, 45, 75, 0.06);
+}
+
+.bloqueCard {
+  padding: 16px;
+  border-top: 4px solid #4774a4;
+}
+
+.bloqueCount,
+.metricCount {
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.bloqueLabel,
+.metricLabel {
+  margin-top: 8px;
+  color: #1f344f;
+  font-weight: 800;
+}
+
+.bloquePct,
+.metricSub {
+  margin-top: 5px;
+  color: #66788d;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.bloqueBar {
+  height: 7px;
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(22, 45, 75, 0.1);
+}
+
+.bloqueBarFill {
+  height: 100%;
+  border-radius: inherit;
+}
+
+.metricCard {
+  padding: 16px;
+  border-left: 4px solid #4774a4;
+}
+
+.fpGanoBadge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 16px 18px;
+  border: 1px solid #d9e3ec;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.fpGanoNum {
+  color: #1b4f84;
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.fpGanoText {
+  color: #485b74;
+  font-weight: 700;
+}
+
+.topTable {
+  overflow: hidden;
+  border: 1px solid #d9e3ec;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.topHeader,
+.topRow {
+  display: grid;
+  grid-template-columns: 1.3fr 1.2fr 0.8fr 0.7fr 0.9fr;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+}
+
+.topHeader {
+  color: #66788d;
+  background: #f5f8fb;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.topRow {
+  border-top: 1px solid #edf2f6;
+  color: #33465f;
+}
+
+.topNombre {
+  font-weight: 800;
+}
+
+.topIntendente {
+  color: #54677c;
+}
+
+.topNum {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+@media (max-width: 1180px) {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .bloqueGrid,
+  .fiveGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .fourGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 24px 16px 92px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .headerStats,
+  .fpGanoBadge {
+    width: 100%;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .headerStatDiv {
+    width: 100%;
+    height: 1px;
+  }
+
+  .bloqueGrid,
+  .fourGrid,
+  .fiveGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .topTable {
+    overflow-x: auto;
+  }
+
+  .topHeader,
+  .topRow {
+    min-width: 760px;
+  }
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
@@ -84,28 +85,28 @@ const DEFAULT_MODULES: CampaignModule[] = [
   },
 ];
 
+const USER_AVATARS: Record<string, string> = {
+  francisco01: "/usuarios/Francisco01.jpg",
+  francisco: "/usuarios/Francisco01.jpg",
+};
+
 function getFirstName(user: SessionUser | null) {
   if (!user) return "Operador";
   const candidate = (user.full_name || user.username || "Operador").trim();
   return candidate.split(/\s+/)[0] || candidate;
 }
 
-function getAvatarCandidates(user: SessionUser | null) {
-  if (!user) return [];
-  const username = user.username?.trim();
-  const firstName = getFirstName(user);
-  return [username, firstName]
+function getAvatarSrc(user: SessionUser | null) {
+  if (!user) return null;
+  const keys = [user.username, user.full_name, getFirstName(user)]
     .filter(Boolean)
-    .flatMap((value) => [`/${value}.jpg`, `/usuarios/${value}.jpg`, `/static/img/${value}.jpg`]);
+    .map((value) => value.trim().toLowerCase());
+  return keys.map((key) => USER_AVATARS[key]).find(Boolean) ?? null;
 }
 
 function UserAvatar({ user }: { user: SessionUser | null }) {
-  const [index, setIndex] = useState(0);
-  const candidates = useMemo(() => getAvatarCandidates(user), [user]);
-
-  useEffect(() => {
-    setIndex(0);
-  }, [candidates]);
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const src = useMemo(() => getAvatarSrc(user), [user]);
 
   const initials = useMemo(() => {
     const base = user?.full_name || user?.username || "PBA";
@@ -116,21 +117,19 @@ function UserAvatar({ user }: { user: SessionUser | null }) {
       .join("") || "PBA";
   }, [user]);
 
-  const src = candidates[index];
-
-  if (!src) {
+  if (!src || failedSrc === src) {
     return <div className={styles.avatarFallback}>{initials}</div>;
   }
 
   return (
-    <img
+    <Image
       src={src}
       alt={user?.full_name || user?.username || "Usuario"}
       className={styles.avatar}
-      onError={() => {
-        if (index < candidates.length - 1) setIndex((current) => current + 1);
-        else setIndex(candidates.length);
-      }}
+      width={112}
+      height={112}
+      decoding="async"
+      onError={() => setFailedSrc(src)}
     />
   );
 }
@@ -142,12 +141,16 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [modules, setModules] = useState<CampaignModule[]>(DEFAULT_MODULES);
   const [user, setUser] = useState<SessionUser | null>(null);
+  const [sessionReady, setSessionReady] = useState(false);
 
   useEffect(() => {
     const token = getToken();
     const storedUser = getUser();
-    setUser(storedUser);
-    setModules(DEFAULT_MODULES);
+    queueMicrotask(() => {
+      setUser(storedUser);
+      setModules(DEFAULT_MODULES);
+      setSessionReady(true);
+    });
 
     if (!token || !storedUser) {
       router.replace("/login");
@@ -157,9 +160,9 @@ export function DashboardShell({ children }: { children: ReactNode }) {
     apiRequest<ModulesResponse>("/maps/modules/", { token })
       .then((response) => {
         const merged = [...DEFAULT_MODULES];
-        for (const module of response.modules) {
-          if (!merged.find((item) => item.route === module.route)) {
-            merged.push(module);
+        for (const campaignModule of response.modules) {
+          if (!merged.find((item) => item.route === campaignModule.route)) {
+            merged.push(campaignModule);
           }
         }
         setModules(merged);
@@ -177,18 +180,18 @@ export function DashboardShell({ children }: { children: ReactNode }) {
             <div className={styles.avatarWrap}>
               <UserAvatar user={user} />
             </div>
-            <div className={styles.userGreeting}>Bienvenido, {getFirstName(user)}</div>
+            <div className={styles.userGreeting}>Bienvenido, {sessionReady ? getFirstName(user) : "Operador"}</div>
           </div>
 
           <nav className={styles.nav}>
-            {modules.map((module) => (
+            {modules.map((campaignModule) => (
               <Link
-                key={module.key}
-                href={module.route}
-                className={pathname === module.route ? styles.active : styles.link}
+                key={campaignModule.key}
+                href={campaignModule.route}
+                className={pathname === campaignModule.route ? styles.active : styles.link}
               >
-                <span className={styles.navIcon}>{NAV_ICONS[module.key] ?? <MapIcon />}</span>
-                <span className={styles.navLabel}>{module.title}</span>
+                <span className={styles.navIcon}>{NAV_ICONS[campaignModule.key] ?? <MapIcon />}</span>
+                <span className={styles.navLabel}>{campaignModule.title}</span>
               </Link>
             ))}
           </nav>
@@ -215,14 +218,14 @@ export function DashboardShell({ children }: { children: ReactNode }) {
       <main className={styles.main}>{children}</main>
 
       <nav className={styles.bottomNav}>
-        {modules.map((module) => (
+        {modules.map((campaignModule) => (
           <Link
-            key={module.key}
-            href={module.route}
-            className={`${styles.navTab} ${pathname === module.route ? styles.navTabActive : ""}`}
+            key={campaignModule.key}
+            href={campaignModule.route}
+            className={`${styles.navTab} ${pathname === campaignModule.route ? styles.navTabActive : ""}`}
           >
-            <span className={styles.navTabIcon}>{NAV_ICONS[module.key] ?? <MapIcon />}</span>
-            <span className={styles.navTabLabel}>{module.title}</span>
+            <span className={styles.navTabIcon}>{NAV_ICONS[campaignModule.key] ?? <MapIcon />}</span>
+            <span className={styles.navTabLabel}>{campaignModule.title}</span>
           </Link>
         ))}
       </nav>
