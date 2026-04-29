@@ -1,7 +1,8 @@
+/* ── Layout base ── */
 .page {
   min-height: 100%;
   overflow: auto;
-  padding: 34px 38px 48px;
+  padding: 34px 38px 56px;
   background: #eef3f8;
 }
 
@@ -10,9 +11,11 @@
   display: grid;
   place-items: center;
   color: #485b74;
+  font-size: 0.95rem;
   font-weight: 700;
 }
 
+/* ── Header ── */
 .header {
   display: flex;
   align-items: flex-end;
@@ -22,11 +25,11 @@
 }
 
 .eyebrow {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: #4774a4;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -35,17 +38,18 @@
   color: #182943;
   font-size: 2.35rem;
   line-height: 1;
+  font-weight: 900;
 }
 
 .headerStats {
   display: flex;
   align-items: center;
   gap: 18px;
-  padding: 14px 18px;
+  padding: 14px 20px;
   border: 1px solid #d9e3ec;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #ffffff;
-  box-shadow: 0 14px 28px rgba(22, 45, 75, 0.08);
+  box-shadow: 0 4px 20px rgba(22, 45, 75, 0.08);
 }
 
 .headerStat {
@@ -56,43 +60,302 @@
 
 .headerStatNum {
   color: #162d4b;
-  font-size: 1.3rem;
-  font-weight: 800;
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .headerStatLabel {
   color: #697b90;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .headerStatDiv {
   width: 1px;
-  height: 34px;
+  height: 32px;
   background: #d9e3ec;
 }
 
+/* ── Sections ── */
 .section {
-  margin-top: 18px;
+  margin-top: 20px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.sectionDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .sectionTitle {
-  margin: 0 0 12px;
+  margin: 0;
   color: #243a56;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 800;
+  letter-spacing: 0.01em;
 }
 
-.bloqueGrid,
+/* ── FP Panorama ── */
+.fpPanorama {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.6fr;
+  gap: 12px;
+}
+
+.fpKpi {
+  padding: 22px 20px;
+  border: 1px solid #b8d4ec;
+  border-top: 4px solid #62b5e5;
+  border-radius: 10px;
+  background: #EFF7FD;
+  box-shadow: 0 4px 16px rgba(22, 45, 75, 0.07);
+}
+
+.fpKpiTop {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.fpKpiNum {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #1b4f84;
+  line-height: 1;
+}
+
+.fpKpiBadge {
+  color: #4774a4;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.fpKpiLabel {
+  margin-top: 10px;
+  color: #1f344f;
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+
+.fpKpiSub {
+  margin-top: 4px;
+  color: #4774a4;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.fpProgressTrack {
+  height: 6px;
+  margin-top: 16px;
+  border-radius: 999px;
+  background: rgba(98, 181, 229, 0.22);
+  overflow: hidden;
+}
+
+.fpProgressFill {
+  height: 100%;
+  border-radius: inherit;
+  background: #62b5e5;
+}
+
+/* FP Strength card */
+.fpStrengthCard {
+  padding: 20px 22px;
+  border: 1px solid #dce5ee;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(22, 45, 75, 0.07);
+}
+
+.fpStrengthCardTitle {
+  margin-bottom: 16px;
+  color: #243a56;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.fpStrengthRows {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.fpStrengthRow {
+  display: grid;
+  grid-template-columns: 10px 90px 28px 1fr 38px;
+  align-items: center;
+  gap: 8px;
+}
+
+.fpStrengthDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.fpStrengthLabel {
+  color: #33465f;
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+
+.fpStrengthNum {
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.fpStrengthBarTrack {
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(22, 45, 75, 0.08);
+  overflow: hidden;
+}
+
+.fpStrengthBarFill {
+  height: 100%;
+  border-radius: inherit;
+}
+
+.fpStrengthPct {
+  color: #697b90;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── FP Concejo ── */
+.concejoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.concejoCard {
+  padding: 18px 16px 16px;
+  border: 1px solid #dce5ee;
+  border-top: 4px solid;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(22, 45, 75, 0.07);
+}
+
+.concejoIcon {
+  font-size: 0.95rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+  opacity: 0.8;
+}
+
+.concejoNum {
+  font-size: 2.4rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.concejoLabel {
+  margin-top: 6px;
+  color: #1f344f;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.concejoPct {
+  margin-top: 4px;
+  color: #66788d;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.concejoSub {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(22, 45, 75, 0.08);
+  color: #697b90;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ── Bloques ── */
+.bloqueGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.bloqueCard {
+  padding: 18px 16px;
+  border: 1px solid #dce5ee;
+  border-top: 4px solid;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(22, 45, 75, 0.06);
+}
+
+.bloqueCount {
+  font-size: 2.2rem;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.bloqueLabel {
+  margin-top: 8px;
+  color: #1f344f;
+  font-weight: 800;
+  font-size: 0.88rem;
+}
+
+.bloquePct {
+  margin-top: 5px;
+  color: #66788d;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.bloqueBar {
+  height: 6px;
+  margin-top: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(22, 45, 75, 0.09);
+}
+
+.bloqueBarFill {
+  height: 100%;
+  border-radius: inherit;
+}
+
+.bloquePadron {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(22, 45, 75, 0.08);
+  color: #66788d;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+/* ── Metric cards (fortaleza, provincial) ── */
 .fourGrid,
 .fiveGrid {
   display: grid;
   gap: 12px;
-}
-
-.bloqueGrid {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .fourGrid {
@@ -103,103 +366,88 @@
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-.bloqueCard,
 .metricCard {
+  padding: 18px 16px;
   border: 1px solid #dce5ee;
-  border-radius: 8px;
+  border-left: 4px solid;
+  border-radius: 10px;
   background: #ffffff;
-  box-shadow: 0 12px 22px rgba(22, 45, 75, 0.06);
+  box-shadow: 0 4px 16px rgba(22, 45, 75, 0.06);
 }
 
-.bloqueCard {
-  padding: 16px;
-  border-top: 4px solid #4774a4;
-}
-
-.bloqueCount,
 .metricCount {
-  font-size: 2rem;
+  font-size: 2.2rem;
   line-height: 1;
   font-weight: 900;
 }
 
-.bloqueLabel,
 .metricLabel {
   margin-top: 8px;
   color: #1f344f;
   font-weight: 800;
+  font-size: 0.88rem;
 }
 
-.bloquePct,
 .metricSub {
   margin-top: 5px;
   color: #66788d;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
-.bloqueBar {
-  height: 7px;
-  margin-top: 14px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(22, 45, 75, 0.1);
-}
-
-.bloqueBarFill {
-  height: 100%;
-  border-radius: inherit;
-}
-
-.metricCard {
-  padding: 16px;
-  border-left: 4px solid #4774a4;
-}
-
+/* ── FP Ganó badge ── */
 .fpGanoBadge {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   margin-top: 14px;
-  padding: 16px 18px;
+  padding: 16px 20px;
   border: 1px solid #d9e3ec;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #ffffff;
+  box-shadow: 0 4px 12px rgba(22, 45, 75, 0.05);
 }
 
 .fpGanoNum {
   color: #1b4f84;
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 900;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
 .fpGanoText {
   color: #485b74;
   font-weight: 700;
+  font-size: 0.9rem;
 }
 
+/* ── Top table ── */
 .topTable {
   overflow: hidden;
   border: 1px solid #d9e3ec;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #ffffff;
+  box-shadow: 0 4px 16px rgba(22, 45, 75, 0.06);
 }
 
 .topHeader,
 .topRow {
   display: grid;
-  grid-template-columns: 1.3fr 1.2fr 0.8fr 0.7fr 0.9fr;
-  gap: 12px;
+  grid-template-columns: 28px 1.4fr 1.3fr 0.9fr 0.8fr 0.6fr 0.8fr;
+  gap: 10px;
   align-items: center;
-  padding: 12px 14px;
+  padding: 11px 16px;
 }
 
 .topHeader {
   color: #66788d;
   background: #f5f8fb;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid #edf2f6;
 }
 
 .topRow {
@@ -207,68 +455,109 @@
   color: #33465f;
 }
 
+.topRow:hover {
+  background: #f8fafc;
+}
+
+.topIdx {
+  color: #b0bec8;
+  font-size: 0.78rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
 .topNombre {
   font-weight: 800;
+  font-size: 0.88rem;
 }
 
 .topIntendente {
   color: #54677c;
+  font-size: 0.85rem;
 }
 
 .topNum {
   font-variant-numeric: tabular-nums;
   font-weight: 700;
+  font-size: 0.88rem;
 }
 
-@media (max-width: 1180px) {
+/* ── Badges ── */
+.badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-size: 0.72rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.badgeEmpty {
+  color: #9CA3AF;
+  font-size: 0.78rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1280px) {
+  .fpPanorama {
+    grid-template-columns: 1fr 1fr;
+  }
+  .fpStrengthCard {
+    grid-column: 1 / -1;
+  }
+  .fpStrengthRow {
+    grid-template-columns: 10px 100px 28px 1fr 38px;
+  }
+}
+
+@media (max-width: 1100px) {
   .header {
     align-items: flex-start;
     flex-direction: column;
   }
-
   .bloqueGrid,
   .fiveGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-
-  .fourGrid {
+  .fourGrid,
+  .concejoGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 768px) {
   .page {
-    padding: 24px 16px 92px;
+    padding: 22px 16px 88px;
   }
-
   .title {
-    font-size: 2rem;
+    font-size: 1.9rem;
   }
-
   .headerStats,
   .fpGanoBadge {
     width: 100%;
-    align-items: flex-start;
     flex-direction: column;
+    align-items: flex-start;
   }
-
   .headerStatDiv {
     width: 100%;
     height: 1px;
   }
-
+  .fpPanorama,
   .bloqueGrid,
   .fourGrid,
-  .fiveGrid {
+  .fiveGrid,
+  .concejoGrid {
     grid-template-columns: 1fr;
   }
-
+  .fpStrengthCard {
+    grid-column: auto;
+  }
   .topTable {
     overflow-x: auto;
   }
-
   .topHeader,
   .topRow {
-    min-width: 760px;
+    min-width: 680px;
   }
 }
