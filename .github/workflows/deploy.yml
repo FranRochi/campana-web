@@ -11,5 +11,11 @@ jobs:
     steps:
       - name: Deploy on server
         run: |
-          chmod +x ~/apps/campana/deploy.sh
-          ~/apps/campana/deploy.sh
+          (
+            flock -x 9
+            cd ~/apps/campana
+            git fetch origin main
+            git reset --hard origin/main
+            chmod +x deploy.sh
+            CAMPANA_DEPLOY_LOCK_HELD=1 ./deploy.sh
+          ) 9>/tmp/campana-deploy.lock
